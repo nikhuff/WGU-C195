@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="526.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane layoutY="-8.0" prefHeight="526.0" prefWidth="716.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab fx:id="appointments" closable="false" text="Appointments">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="703.0">
+                <children>
+                    <TableView layoutX="14.0" layoutY="14.0" prefHeight="438.0" prefWidth="686.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                      <columns>
+                        <TableColumn fx:id="appointmentID" prefWidth="101.0" text="Appointment ID" />
+                        <TableColumn fx:id="title" prefWidth="49.0" text="Title" />
+                          <TableColumn fx:id="description" prefWidth="75.0" text="Description" />
+                          <TableColumn fx:id="location" prefWidth="75.0" text="Location" />
+                          <TableColumn fx:id="contact" prefWidth="75.0" text="Contact" />
+                          <TableColumn fx:id="type" prefWidth="75.0" text="Type" />
+                          <TableColumn fx:id="start" prefWidth="82.0" text="Start" />
+                          <TableColumn fx:id="end" prefWidth="68.0" text="End" />
+                          <TableColumn fx:id="customerIDA" prefWidth="75.0" text="Customer ID" />
+                      </columns>
+                    </TableView>
+                    <AnchorPane layoutX="15.0" layoutY="462.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="15.0">
+                       <children>
+                          <Label fx:id="filterBy" text="Filter By:" />
+                          <RadioButton fx:id="week" layoutX="70.0" mnemonicParsing="false" text="Week" />
+                          <RadioButton fx:id="month" layoutX="129.0" mnemonicParsing="false" text="Month" />
+                       </children>
+                    </AnchorPane>
+                    <AnchorPane layoutX="604.0" layoutY="458.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+                       <children>
+                          <Button fx:id="addAppointment" mnemonicParsing="false" text="Add" />
+                          <Button fx:id="editAppointment" layoutX="61.0" mnemonicParsing="false" text="Edit" />
+                       </children>
+                    </AnchorPane>
+                 </children>
+              </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="customers" closable="false" text="Customers">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="703.0">
+                <children>
+                  <TableView layoutX="14.0" layoutY="14.0" prefHeight="438.0" prefWidth="686.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                    <columns>
+                      <TableColumn fx:id="customerIDC" prefWidth="101.0" text="Customer ID" />
+                      <TableColumn fx:id="name" prefWidth="49.0" text="Name" />
+                      <TableColumn fx:id="address" prefWidth="75.0" text="Address" />
+                      <TableColumn fx:id="zipcode" prefWidth="75.0" text="Zip Code" />
+                      <TableColumn fx:id="division" prefWidth="75.0" text="Division" />
+                      <TableColumn fx:id="country" prefWidth="75.0" text="Country" />
+                      <TableColumn fx:id="phone" prefWidth="82.0" text="Phone" />
+                    </columns>
+                  </TableView>
+                  <AnchorPane layoutX="604.0" layoutY="458.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+                    <children>
+                      <Button fx:id="addCustomer" mnemonicParsing="false" text="Add" />
+                      <Button fx:id="editCustomer" layoutX="61.0" mnemonicParsing="false" text="Edit" />
+                    </children>
+                  </AnchorPane>
+                </children>
+              </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="reports" text="Reports">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView layoutX="158.0" layoutY="77.0" prefHeight="497.0" prefWidth="716.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                       <AnchorPane layoutX="604.0" layoutY="458.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+                         <children>
+                           <Button fx:id="generate" mnemonicParsing="false" text="Generate" />
+                         </children>
+                       </AnchorPane>
+                     </children>
+              </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
