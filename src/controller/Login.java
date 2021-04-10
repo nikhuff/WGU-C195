@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import util.Language;
 
@@ -15,11 +16,14 @@ public class Login implements Initializable {
     private Label username;
     @FXML
     private Label password;
+    @FXML
+    private Button signIn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loginTitle.setText(Language.getField("Login Title"));
         username.setText(Language.getField("Username"));
         password.setText(Language.getField("Password"));
+        signIn.setText(Language.getField("Sign In"));
     }
 }
