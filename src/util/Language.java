@@ -1,35 +1,41 @@
 package util;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
 public class Language {
     private static String language;
     private static int languageIndex;
     private static ArrayList<String> supportedLanguages = new ArrayList<String>();
-    private static HashMap<String, ArrayList<String>> translations = new HashMap<String, ArrayList<String>>();
+    private static JSONObject translations = new JSONObject();
+
 
     private static void initializeTranslations() {
-        ArrayList<String> loginTitle = new ArrayList<String>();
-        loginTitle.add("Login");
-        loginTitle.add("Connexion");
-        translations.put("Login Title", loginTitle);
 
-        ArrayList<String> password = new ArrayList<String>();
-        password.add("password");
-        password.add("le mot de passe");
-        translations.put("Password", password);
+        JSONParser jsonParser = new JSONParser();
+        URL url = Language.class.getResource("translations.json");
+        File file = new File(url.getPath());
 
-        ArrayList<String> username = new ArrayList<String>();
-        username.add("username");
-        username.add("nom d'utilisateur");
-        translations.put("Username", username);
-
-        ArrayList<String> stageTitle = new ArrayList<String>();
-        stageTitle.add("Appointment Scheduler");
-        stageTitle.add("Planificateur de rendez-vous");
-        translations.put("Stage Title", stageTitle);
+        try {
+            FileReader reader = new FileReader(file);
+            translations = (JSONObject) jsonParser.parse(reader);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void init() {
@@ -42,8 +48,10 @@ public class Language {
 
     public static String getField(String fieldName) {
         String fieldValue;
+        JSONArray translation;
         try {
-            fieldValue = translations.get(fieldName).get(languageIndex);
+            translation = (JSONArray) translations.get(fieldName);
+            fieldValue = (String) translation.get(languageIndex);
         } catch (Exception e) {
             System.out.println("That key does not exist in translations");
             e.printStackTrace();
