@@ -10,9 +10,7 @@ import java.sql.SQLException;
 
 public class DBUser {
 
-    public static ObservableList<User> getUsers() {
-
-        ObservableList<User> users = FXCollections.observableArrayList();
+    public static User authenticateUser(String providedUsername, String providedPassword) {
 
         try {
             String sql = "SELECT * FROM users";
@@ -26,14 +24,16 @@ public class DBUser {
                 String username = rs.getString("User_Name");
                 String password = rs.getString("Password");
 
-                User user = new User(id, username, password);
-                users.add(user);
+                User user = new User(id, username);
+                if (user.authenticate(providedUsername) && providedPassword == password) {
+                    return user;
+                }
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return users;
+        return null;
     }
 }
