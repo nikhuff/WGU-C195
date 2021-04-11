@@ -1,14 +1,12 @@
 package model;
 
 public class User {
-    private int id;
-    private String username;
-    private String password;
+    private static int id;
+    private static String username;
 
-    public User(int id, String username, String password) {
+    public User(int id, String username) {
         this.id = id;
         this.username = username;
-        this.password = password;
     }
 
     public int getId() {
@@ -27,16 +25,8 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean authenticate(String username, String password) {
-        if (username == this.username && password == this.password) {
+    public boolean authenticate(String username) {
+        if (username == this.username) {
             return true;
         } else {
             return false;
