@@ -1,9 +1,18 @@
 package controller;
 
+import database.DBAppointment;
+import database.DBCustomer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import model.Appointment;
+import model.Customer;
 import util.Language;
+import util.SceneChange;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -69,6 +78,11 @@ public class Home implements Initializable {
     @FXML
     private Button generate;
 
+    @FXML
+    private TableView appointmentTable;
+    @FXML
+    private TableView customerTable;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // appointments tab
@@ -110,5 +124,60 @@ public class Home implements Initializable {
             tabPane.setTabMinWidth((tabPane.getWidth() / tabPane.getTabs().size()) - 15);
             tabPane.setTabMaxWidth((tabPane.getWidth() / tabPane.getTabs().size()) - 15);
         });
+
+        appointmentTable.setItems(DBAppointment.getAppointments());
+        customerTable.setItems(DBCustomer.getCustomers());
+
+        appointmentID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        location.setCellValueFactory(new PropertyValueFactory<>("location"));
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        start.setCellValueFactory(new PropertyValueFactory<>("start"));
+        end.setCellValueFactory(new PropertyValueFactory<>("end"));
+        contact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        customerIDA.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        customerIDC.setCellValueFactory(new PropertyValueFactory<>("id"));
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        address.setCellValueFactory(new PropertyValueFactory<>("address"));
+        zipcode.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        country.setCellValueFactory(new PropertyValueFactory<>("country"));
+        division.setCellValueFactory(new PropertyValueFactory<>("division"));
+    }
+
+    public void addAppointment(ActionEvent event) {
+        AppointmentDetail appointmentDetail = new AppointmentDetail();
+        SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), appointmentDetail);
+        sc.changeScene(Language.getField("Stage Title"), 450, 350);
+    }
+
+    public void editAppointment(ActionEvent event) {
+        Appointment appointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
+        if (appointment == null) {
+            System.out.println("nothing selected");
+            return;
+        }
+        AppointmentDetail appointmentDetail = new AppointmentDetail(appointment);
+        SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), appointmentDetail);
+        sc.changeScene(Language.getField("Stage Title"), 450, 350);
+    }
+
+    public void addCustomer(ActionEvent event) {
+        CustomerDetail customerDetail = new CustomerDetail();
+        SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), customerDetail);
+        sc.changeScene(Language.getField("Stage Title"), 450, 350);
+    }
+
+    public void editCustomer(ActionEvent event) {
+        Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+        if (customer == null) {
+            System.out.println("nothing selected");
+            return;
+        }
+        CustomerDetail customerDetail = new CustomerDetail(customer);
+        SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), customerDetail);
+        sc.changeScene(Language.getField("Stage Title"), 450, 350);
     }
 }
