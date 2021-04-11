@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="388.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerDetail">
+<AnchorPane prefHeight="388.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
      <Label fx:id="customerTitle" alignment="CENTER" layoutX="178.0" layoutY="32.0" prefHeight="25.0" prefWidth="31.0" text="Customer" textAlignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
        <font>
@@ -20,20 +20,21 @@
             <Label fx:id="divisionLabel" layoutY="124.0" text="Division" />
             <Label fx:id="countryLabel" layoutY="154.0" text="Country" />
             <Label fx:id="phoneLabel" layoutY="184.0" text="Phone Number" />
-            <ChoiceBox layoutX="203.0" layoutY="150.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-            <ChoiceBox layoutX="100.0" layoutY="120.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-            <TextField disable="true" editable="false" layoutX="204.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-            <TextField layoutX="100.0" layoutY="30.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-            <TextField layoutX="100.0" layoutY="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-            <TextField layoutX="204.0" layoutY="90.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-            <TextField layoutX="204.0" layoutY="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <ChoiceBox fx:id="country" layoutX="203.0" layoutY="150.0" onAction="#filterDivisions" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <ChoiceBox fx:id="division" layoutX="100.0" layoutY="120.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField fx:id="idText" disable="true" editable="false" layoutX="204.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField fx:id="nameText" layoutX="100.0" layoutY="30.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField fx:id="addressText" layoutX="100.0" layoutY="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField fx:id="zipcodeText" layoutX="204.0" layoutY="90.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField fx:id="phoneText" layoutX="204.0" layoutY="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
       <Button fx:id="delete" layoutX="25.0" layoutY="385.0" mnemonicParsing="false" text="Delete" textFill="#e41111" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
       <AnchorPane layoutX="332.0" layoutY="390.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <children>
-            <Button fx:id="cancel" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
             <Button fx:id="save" layoutX="67.0" mnemonicParsing="false" text="Save" />
+            <Button fx:id="update" layoutX="67.0" mnemonicParsing="false" text="Save" />
          </children>
       </AnchorPane>
    </children>
