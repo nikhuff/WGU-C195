@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.CustomerDetail"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="388.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CustomerDetail">
+   <children>
+     <Label fx:id="customerTitle" alignment="CENTER" layoutX="178.0" layoutY="32.0" prefHeight="25.0" prefWidth="31.0" text="Customer" textAlignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+       <font>
+         <Font name="Book Antiqua" size="24.0" />
+       </font>
+     </Label>
+      <AnchorPane layoutX="36.0" layoutY="88.0" prefHeight="207.0" prefWidth="305.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+         <children>
+            <Label fx:id="idLabel" layoutY="4.0" text="ID" />
+            <Label fx:id="nameLabel" layoutX="-2.0" layoutY="34.0" text="Name" />
+            <Label fx:id="addressLabel" layoutY="64.0" text="Address" />
+            <Label fx:id="zipcodeLabel" layoutY="94.0" text="Zip Code" />
+            <Label fx:id="divisionLabel" layoutY="124.0" text="Division" />
+            <Label fx:id="countryLabel" layoutY="154.0" text="Country" />
+            <Label fx:id="phoneLabel" layoutY="184.0" text="Phone Number" />
+            <ChoiceBox layoutX="203.0" layoutY="150.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <ChoiceBox layoutX="100.0" layoutY="120.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField disable="true" editable="false" layoutX="204.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField layoutX="100.0" layoutY="30.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField layoutX="100.0" layoutY="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField layoutX="204.0" layoutY="90.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField layoutX="204.0" layoutY="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="delete" layoutX="25.0" layoutY="385.0" mnemonicParsing="false" text="Delete" textFill="#e41111" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
+      <AnchorPane layoutX="332.0" layoutY="390.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+         <children>
+            <Button fx:id="cancel" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="save" layoutX="67.0" mnemonicParsing="false" text="Save" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>
