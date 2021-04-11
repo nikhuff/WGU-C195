@@ -1,6 +1,7 @@
 package model;
 
 public class User {
+
     private static int id;
     private static String username;
 
@@ -25,11 +26,4 @@ public class User {
         this.username = username;
     }
 
-    public boolean authenticate(String username) {
-        if (username == this.username) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
