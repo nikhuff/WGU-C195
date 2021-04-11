@@ -26,5 +26,12 @@
   "Division": ["Division", "La Province"],
   "Country": ["Country", "Country"],
   "Phone": ["Phone", "Téléphoner"],
-  "Generate": ["Generate", "Produire"]
+  "Generate": ["Generate", "Produire"],
+  "Customer": ["Customer", "Le Client"],
+  "ID": ["ID", "Identifiant"],
+  "Delete": ["Delete", "Effacer"],
+  "Cancel": ["Cancel", "Annuler"],
+  "Save": ["Save", "Sauvegarder"],
+  "Appointment": ["Appointment", "Rendez-vous"],
+  "User ID": ["Appointment", "Identifiant d'utilisateur"]
 }
