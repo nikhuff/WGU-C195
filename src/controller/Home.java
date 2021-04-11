@@ -17,6 +17,8 @@ public class Home implements Initializable {
     @FXML
     private Tab reports;
     @FXML
+    private TabPane tabPane;
+    @FXML
     private TableColumn appointmentID;
     @FXML
     private TableColumn title;
@@ -101,5 +103,12 @@ public class Home implements Initializable {
         // reports tab
         reports.setText(Language.getField("Reports"));
         generate.setText(Language.getField("Generate"));
+
+        // make the tabs pretty
+        tabPane.widthProperty().addListener((observable, oldValue, newValue) ->
+        {
+            tabPane.setTabMinWidth((tabPane.getWidth() / tabPane.getTabs().size()) - 15);
+            tabPane.setTabMaxWidth((tabPane.getWidth() / tabPane.getTabs().size()) - 15);
+        });
     }
 }
