@@ -11,7 +11,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="703.0">
                 <children>
-                    <TableView layoutX="14.0" layoutY="14.0" prefHeight="438.0" prefWidth="686.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                    <TableView fx:id="appointmentTable" layoutX="14.0" layoutY="14.0" prefHeight="438.0" prefWidth="686.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                       <columns>
                         <TableColumn fx:id="appointmentID" prefWidth="101.0" text="Appointment ID" />
                         <TableColumn fx:id="title" prefWidth="49.0" text="Title" />
@@ -33,8 +33,8 @@
                     </AnchorPane>
                     <AnchorPane layoutX="604.0" layoutY="458.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
                        <children>
-                          <Button fx:id="addAppointment" mnemonicParsing="false" text="Add" />
-                          <Button fx:id="editAppointment" layoutX="61.0" mnemonicParsing="false" text="Edit" />
+                          <Button fx:id="addAppointment" mnemonicParsing="false" onAction="#addAppointment" text="Add" />
+                          <Button fx:id="editAppointment" layoutX="61.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit" />
                        </children>
                     </AnchorPane>
                  </children>
@@ -45,7 +45,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="703.0">
                 <children>
-                  <TableView layoutX="14.0" layoutY="14.0" prefHeight="438.0" prefWidth="686.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                  <TableView fx:id="customerTable" layoutX="14.0" layoutY="14.0" prefHeight="438.0" prefWidth="686.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                     <columns>
                       <TableColumn fx:id="customerIDC" prefWidth="101.0" text="Customer ID" />
                       <TableColumn fx:id="name" prefWidth="49.0" text="Name" />
@@ -58,8 +58,8 @@
                   </TableView>
                   <AnchorPane layoutX="604.0" layoutY="458.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
                     <children>
-                      <Button fx:id="addCustomer" mnemonicParsing="false" text="Add" />
-                      <Button fx:id="editCustomer" layoutX="61.0" mnemonicParsing="false" text="Edit" />
+                      <Button fx:id="addCustomer" mnemonicParsing="false" onAction="#addCustomer" text="Add" />
+                      <Button fx:id="editCustomer" layoutX="61.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
                     </children>
                   </AnchorPane>
                 </children>
