@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import util.Language;
+import util.SceneChange;
 
 public class Main extends Application {
 
@@ -18,16 +19,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login.fxml"));
-        loader.setController(new controller.Login());
-        Parent root = loader.load();
-        primaryStage.setTitle(Language.getField("Stage Title"));
         primaryStage.setMinWidth(260);
         primaryStage.setMinHeight(260);
-        Scene scene = new Scene(root, 300, 275);
-        scene.getStylesheets().add("styles/styles.css");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        SceneChange sc = new SceneChange(primaryStage, "../view/login.fxml");
+        sc.changeScene(Language.getField("Stage Title"), 300, 300);
     }
 
 
