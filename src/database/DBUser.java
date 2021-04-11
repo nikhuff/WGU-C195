@@ -25,7 +25,7 @@ public class DBUser {
                 String password = rs.getString("Password");
 
                 User user = new User(id, username);
-                if (user.authenticate(providedUsername) && providedPassword == password) {
+                if (providedUsername.matches(username) && providedPassword.matches(password)) {
                     return user;
                 }
             }
