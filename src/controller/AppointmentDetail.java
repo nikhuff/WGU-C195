@@ -1,5 +1,6 @@
 package controller;
 
+import database.DBAppointment;
 import database.DBContact;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,16 +12,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Appointment;
+import util.InvalidInputException;
 import util.Language;
 import util.SceneChange;
+import util.Validate;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AppointmentDetail implements Initializable, Controller {
 
     private String viewURL;
     private Appointment appointment;
+    private int id;
 
     @FXML
     private Label appointmentTitle;
@@ -76,6 +81,7 @@ public class AppointmentDetail implements Initializable, Controller {
     public AppointmentDetail() {
         String url = "../view/AppointmentDetail.fxml";
         this.viewURL = url;
+        id = ThreadLocalRandom.current().nextInt(1000,2000);
     }
 
     public AppointmentDetail(Appointment appointment) {
@@ -112,6 +118,8 @@ public class AppointmentDetail implements Initializable, Controller {
         delete.setVisible(false);
         update.setVisible(false);
 
+        idText.setText(String.valueOf(id));
+
         if (appointment != null) {
             idText.setText(String.valueOf(appointment.getId()));
             titleText.setText(appointment.getTitle());
@@ -128,18 +136,88 @@ public class AppointmentDetail implements Initializable, Controller {
             save.setVisible(false);
             update.setVisible(true);
         }
+
+        customerText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            try {
+                Validate.validateID(customerText);
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+            }
+        });
+
+        userText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            try {
+                Validate.validateID(userText);
+            } catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+            }
+        });
     }
 
-    public void cancel(ActionEvent event) {
+    private void returnHome(ActionEvent event) {
         SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), "../view/home.fxml");
         sc.changeScene(Language.getField("Stage Title"), 500, 720);
     }
 
+    public void cancel(ActionEvent event) {
+        returnHome(event);
+    }
+
+    private Appointment prepareAppointment() throws InvalidInputException {
+        int id;
+        int customerID;
+        int userID;
+        String start = startText.getText();
+        String end = endText.getText();
+
+        try {
+            id = Validate.validateID(idText);
+            customerID = Validate.validateID(customerText);
+            userID = Validate.validateID(userText);
+        } catch (InvalidInputException e) {
+            throw e;
+        }
+
+        String title = titleText.getText();
+        String description = descriptionText.getText();
+        String location = locationText.getText();
+        String type = typeText.getText();
+        String contactName = contact.getValue();
+
+        return new Appointment(id, title, description, location, type, start, end, customerID, userID, contactName);
+    }
+
     public void updateAppointment(ActionEvent event) {
+
         System.out.println("updating appointment...");
+        Appointment appointment;
+        try {
+            appointment = prepareAppointment();
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        DBAppointment.updateAppointment(appointment);
+        returnHome(event);
     }
 
     public void saveAppointment(ActionEvent event) {
+
         System.out.println("saving appointment...");
+        Appointment appointment;
+        try {
+            appointment = prepareAppointment();
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        DBAppointment.addAppointment(appointment);
+        returnHome(event);
+    }
+
+    public void deleteAppointment(ActionEvent event) {
+        String id = idText.getText();
+        DBAppointment.deleteAppointment(id);
+        returnHome(event);
     }
 }
