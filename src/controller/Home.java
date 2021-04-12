@@ -136,7 +136,7 @@ public class Home implements Initializable {
         start.setCellValueFactory(new PropertyValueFactory<>("start"));
         end.setCellValueFactory(new PropertyValueFactory<>("end"));
         contact.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        customerIDA.setCellValueFactory(new PropertyValueFactory<>("id"));
+        customerIDA.setCellValueFactory(new PropertyValueFactory<>("customerID"));
 
         customerIDC.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
