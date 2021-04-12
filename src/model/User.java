@@ -10,7 +10,7 @@ public class User {
         this.username = username;
     }
 
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
