@@ -20,22 +20,22 @@
         <Label fx:id="contactLabel" layoutY="124.0" text="Contact" />
         <Label fx:id="typeLabel" layoutY="154.0" text="Type" />
         <Label fx:id="startLabel" layoutY="184.0" text="Start" />
-        <ChoiceBox fx:id="contact" layoutX="100.0" layoutY="120.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <Label fx:id="endLabel" layoutY="214.0" text="End" />
+            <Label fx:id="customerLabel" layoutY="244.0" text="Customer ID" />
+            <Label fx:id="userLabel" layoutY="274.0" text="User ID" />
         <TextField fx:id="idText" disable="true" editable="false" layoutX="204.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
         <TextField fx:id="titleText" layoutX="100.0" layoutY="30.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
         <TextField fx:id="descriptionText" layoutX="100.0" layoutY="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
         <TextField fx:id="locationText" layoutX="204.0" layoutY="90.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-        <TextField fx:id="startText" layoutX="204.0" layoutY="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-            <Label fx:id="endLabel" layoutY="214.0" text="End" />
-            <TextField fx:id="endText" layoutX="100.0" layoutY="210.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+        <ChoiceBox fx:id="contact" layoutX="100.0" layoutY="120.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
             <TextField fx:id="typeText" layoutX="100.0" layoutY="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-            <Label fx:id="customerLabel" layoutY="244.0" text="Customer ID" />
+        <TextField fx:id="startText" layoutX="204.0" layoutY="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
+            <TextField fx:id="endText" layoutX="100.0" layoutY="210.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
             <TextField fx:id="customerText" layoutX="100.0" layoutY="240.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
-            <Label fx:id="userLabel" layoutY="274.0" text="User ID" />
             <TextField fx:id="userText" layoutX="100.0" layoutY="270.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
       </children>
     </AnchorPane>
-    <Button fx:id="delete" layoutX="25.0" layoutY="385.0" mnemonicParsing="false" text="Delete" textFill="#e41111" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
+    <Button fx:id="delete" layoutX="25.0" layoutY="385.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" textFill="#e41111" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
     <AnchorPane layoutX="332.0" layoutY="390.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
       <children>
         <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
