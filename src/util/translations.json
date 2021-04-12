@@ -33,6 +33,6 @@
   "Cancel": ["Cancel", "Annuler"],
   "Save": ["Save", "Sauvegarder"],
   "Appointment": ["Appointment", "Rendez-vous"],
-  "User ID": ["Appointment", "Identifiant d'utilisateur"],
+  "User ID": ["User ID", "Identifiant d'utilisateur"],
   "Reports": ["Reports", "Rapports"]
 }
