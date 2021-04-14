@@ -29,12 +29,12 @@
             <TextField fx:id="phoneText" layoutX="204.0" layoutY="180.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
-      <Button fx:id="delete" layoutX="25.0" layoutY="385.0" mnemonicParsing="false" text="Delete" textFill="#e41111" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
+      <Button fx:id="delete" layoutX="25.0" layoutY="385.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete" textFill="#e41111" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
       <AnchorPane layoutX="332.0" layoutY="390.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <children>
             <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-            <Button fx:id="save" layoutX="67.0" mnemonicParsing="false" text="Save" />
-            <Button fx:id="update" layoutX="67.0" mnemonicParsing="false" text="Save" />
+            <Button fx:id="save" layoutX="67.0" mnemonicParsing="false" onAction="#saveCustomer" text="Save" />
+            <Button fx:id="update" layoutX="67.0" mnemonicParsing="false" onAction="#updateCustomer" text="Save" />
          </children>
       </AnchorPane>
    </children>

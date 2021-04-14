@@ -1,8 +1,8 @@
 package controller;
 
 import database.DBCountry;
+import database.DBCustomer;
 import database.DBDivision;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,16 +14,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
+import util.InvalidInputException;
 import util.Language;
 import util.SceneChange;
+import util.Validate;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CustomerDetail implements Initializable, Controller {
 
     private String viewURL;
     private Customer customer;
+    private int id;
 
     @FXML
     private Label customerTitle;
@@ -61,10 +65,13 @@ public class CustomerDetail implements Initializable, Controller {
     private Button cancelButton;
     @FXML
     private Button save;
+    @FXML
+    private Button update;
 
     public CustomerDetail() {
         String url = "../view/CustomerDetail.fxml";
         this.viewURL = url;
+        id = ThreadLocalRandom.current().nextInt(1000,2000);
     }
 
     public CustomerDetail(Customer customer) {
@@ -97,6 +104,8 @@ public class CustomerDetail implements Initializable, Controller {
         save.setText(Language.getField("Save"));
 
         delete.setVisible(false);
+        update.setVisible(false);
+        idText.setText(String.valueOf(id));
 
         if (customer != null) {
             idText.setText(String.valueOf(customer.getId()));
@@ -109,12 +118,18 @@ public class CustomerDetail implements Initializable, Controller {
             phoneText.setText(customer.getPhone());
 
             delete.setVisible(true);
+            update.setVisible(true);
+            save.setVisible(false);
         }
     }
 
-    public void cancel(ActionEvent event) {
+    private void returnHome(ActionEvent event) {
         SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), "../view/home.fxml");
-        sc.changeScene(Language.getField("Stage Title"), 500, 720);
+        sc.changeScene(Language.getField("Stage Title"), 500, 790, 200, 790);
+    }
+
+    public void cancel(ActionEvent event) {
+        returnHome(event);
     }
 
     public void filterDivisions(ActionEvent event) {
@@ -123,5 +138,58 @@ public class CustomerDetail implements Initializable, Controller {
         division.setItems(divisions);
         // set default value so it's populated
         division.setValue(divisions.get(0));
+    }
+
+    private Customer prepareCustomer() throws InvalidInputException {
+        int id;
+        try {
+            id = Validate.validateCustomerID(idText);
+        } catch (InvalidInputException e) {
+            throw e;
+        }
+
+        String name = nameText.getText();
+        String address = addressText.getText();
+        String zipcode = zipcodeText.getText();
+        String phone = phoneText.getText();
+        String countryValue = country.getValue();
+        String divisionValue = division.getValue();
+
+        return new Customer(id, name, address, zipcode, phone, countryValue, divisionValue);
+    }
+
+    public void updateCustomer(ActionEvent event) {
+
+        System.out.println("updating customer...");
+        Customer customer;
+        try {
+            customer = prepareCustomer();
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        DBCustomer.updateCustomer(customer);
+        returnHome(event);
+    }
+
+    public void saveCustomer(ActionEvent event) {
+
+        System.out.println("saving customer...");
+        Customer customer;
+        try {
+            customer = prepareCustomer();
+        } catch (InvalidInputException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        DBCustomer.addCustomer(customer);
+        returnHome(event);
+    }
+
+    public void deleteCustomer(ActionEvent event) {
+        String id = idText.getText();
+//        DBAppointment.deleteAppointment(id);
+        DBCustomer.deleteCustomer(id);
+        returnHome(event);
     }
 }
