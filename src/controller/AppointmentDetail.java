@@ -2,24 +2,24 @@ package controller;
 
 import database.DBAppointment;
 import database.DBContact;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
-import util.InvalidInputException;
-import util.Language;
-import util.SceneChange;
-import util.Validate;
+import util.*;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 public class AppointmentDetail implements Initializable, Controller {
 
@@ -42,6 +42,10 @@ public class AppointmentDetail implements Initializable, Controller {
     @FXML
     private Label typeLabel;
     @FXML
+    private Label startDate;
+    @FXML
+    private Label endDate;
+    @FXML
     private Label startLabel;
     @FXML
     private Label endLabel;
@@ -62,9 +66,17 @@ public class AppointmentDetail implements Initializable, Controller {
     @FXML
     private TextField typeText;
     @FXML
-    private TextField startText;
+    private ChoiceBox<LocalTime> startHour;
     @FXML
-    private TextField endText;
+    private ChoiceBox<String> startMin;
+    @FXML
+    private ChoiceBox<LocalTime> endHour;
+    @FXML
+    private ChoiceBox<String> endMin;
+    @FXML
+    private DatePicker startDateText;
+    @FXML
+    private DatePicker endDateText;
     @FXML
     private TextField customerText;
     @FXML
@@ -79,15 +91,14 @@ public class AppointmentDetail implements Initializable, Controller {
     private Button update;
 
     public AppointmentDetail() {
-        String url = "../view/AppointmentDetail.fxml";
-        this.viewURL = url;
-        id = ThreadLocalRandom.current().nextInt(1000,2000);
+        this.viewURL = "../view/AppointmentDetail.fxml";
+        this.id = ThreadLocalRandom.current().nextInt(1000,2000);
     }
 
     public AppointmentDetail(Appointment appointment) {
-        String url = "../view/AppointmentDetail.fxml";
-        this.viewURL = url;
+        this.viewURL = "../view/AppointmentDetail.fxml";
         this.appointment = appointment;
+        this.id = appointment.getId();
     }
 
     @Override
@@ -95,10 +106,166 @@ public class AppointmentDetail implements Initializable, Controller {
         return viewURL;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    private void initializeTimes() {
+        int[] hours = IntStream.rangeClosed(Time.getOpen(), Time.getClose() - 1).toArray();
+        String[] minutes = {":0", ":15", ":30", ":45"};
 
-        contact.setItems(DBContact.getContacts());
+        ObservableList<LocalTime> hoursStart = FXCollections.observableArrayList();
+        ObservableList<LocalTime> hoursEnd = FXCollections.observableArrayList();
+
+        ObservableList<String> minutesStart = FXCollections.observableArrayList();
+        ObservableList<String> minutesEnd = FXCollections.observableArrayList();
+
+        for (int i : hours) {
+            LocalTime time = LocalTime.of(i, 0);
+            hoursStart.add(time);
+            hoursEnd.add(time);
+        }
+
+        for (String i : minutes) {
+            minutesStart.add(i);
+            minutesEnd.add(i);
+        }
+
+        startHour.setItems(hoursStart);
+        endHour.setItems(hoursStart);
+        startMin.setItems(minutesStart);
+        endMin.setItems(minutesEnd);
+    }
+
+    private void addListeners() {
+        customerText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.validateCustomerID(customerText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        userText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.validateUserID(userText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        titleText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(titleText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        descriptionText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(descriptionText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        locationText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(locationText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        contact.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(contact);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        typeText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(typeText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        startDateText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredDate(startDateText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        endDateText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredDate(endDateText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        startHour.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredTime(startHour);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        endHour.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredTime(endHour);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        startMin.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(startMin);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        endMin.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(endMin);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void initLanguage() {
 
         appointmentTitle.setText(Language.getField("Appointment"));
         idLabel.setText(Language.getField("ID"));
@@ -107,6 +274,8 @@ public class AppointmentDetail implements Initializable, Controller {
         descriptionLabel.setText(Language.getField("Description"));
         contactLabel.setText(Language.getField("Contact"));
         typeLabel.setText(Language.getField("Type"));
+        startDate.setText(Language.getField("Start Date"));
+        endDate.setText(Language.getField("End Date"));
         startLabel.setText(Language.getField("Start Time"));
         endLabel.setText(Language.getField("End Time"));
         customerLabel.setText(Language.getField("Customer ID"));
@@ -114,6 +283,31 @@ public class AppointmentDetail implements Initializable, Controller {
         delete.setText(Language.getField("Delete"));
         cancelButton.setText(Language.getField("Cancel"));
         save.setText(Language.getField("Save"));
+    }
+
+    private void initializeAppointment() {
+
+        titleText.setText(appointment.getTitle());
+        descriptionText.setText(appointment.getDescription());
+        locationText.setText(appointment.getLocation());
+        typeText.setText(appointment.getType());
+        contact.setValue(appointment.getContact());
+        startDateText.setValue(appointment.getStart().toLocalDate());
+        endDateText.setValue(appointment.getEnd().toLocalDate());
+        startHour.setValue(appointment.getStart().toLocalTime());
+        endHour.setValue(appointment.getEnd().toLocalTime());
+        startMin.setValue(Time.getMinuteString(appointment.getStart().toLocalTime()));
+        endMin.setValue(Time.getMinuteString(appointment.getEnd().toLocalTime()));
+        customerText.setText(String.valueOf(appointment.getCustomerID()));
+        userText.setText(String.valueOf(appointment.getUserID()));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        contact.setItems(DBContact.getContacts());
+        initializeTimes();
+        initLanguage();
 
         delete.setVisible(false);
         update.setVisible(false);
@@ -121,42 +315,18 @@ public class AppointmentDetail implements Initializable, Controller {
         idText.setText(String.valueOf(id));
 
         if (appointment != null) {
-            idText.setText(String.valueOf(appointment.getId()));
-            titleText.setText(appointment.getTitle());
-            descriptionText.setText(appointment.getDescription());
-            locationText.setText(appointment.getLocation());
-            typeText.setText(appointment.getType());
-            contact.setValue(appointment.getContact());
-            startText.setText(appointment.getStart());
-            endText.setText(appointment.getEnd());
-            customerText.setText(String.valueOf(appointment.getCustomerID()));
-            userText.setText(String.valueOf(appointment.getUserID()));
-
+            initializeAppointment();
             delete.setVisible(true);
             save.setVisible(false);
             update.setVisible(true);
         }
 
-        customerText.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            try {
-                Validate.validateID(customerText);
-            } catch (InvalidInputException e) {
-                System.out.println(e.getMessage());
-            }
-        });
-
-        userText.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            try {
-                Validate.validateID(userText);
-            } catch (InvalidInputException e) {
-                System.out.println(e.getMessage());
-            }
-        });
+        addListeners();
     }
 
     private void returnHome(ActionEvent event) {
         SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), "../view/home.fxml");
-        sc.changeScene(Language.getField("Stage Title"), 500, 720);
+        sc.changeScene(Language.getField("Stage Title"), 500, 790, 200, 790);
     }
 
     public void cancel(ActionEvent event) {
@@ -164,27 +334,54 @@ public class AppointmentDetail implements Initializable, Controller {
     }
 
     private Appointment prepareAppointment() throws InvalidInputException {
+
         int id;
         int customerID;
         int userID;
-        String start = startText.getText();
-        String end = endText.getText();
+        String title;
+        String description;
+        String location;
+        String type;
+        String contactName;
+        int minS;
+        int minE;
+        LocalTime start;
+        LocalTime end;
+        LocalDate startDate;
+        LocalDate endDate;
+
+        ZonedDateTime startZonedDateTime;
+        ZonedDateTime endZonedDateTime;
 
         try {
             id = Validate.validateID(idText);
-            customerID = Validate.validateID(customerText);
-            userID = Validate.validateID(userText);
+            customerID = Validate.validateCustomerID(customerText);
+            userID = Validate.validateUserID(userText);
+            title = Validate.requiredField(titleText);
+            description = Validate.requiredField(descriptionText);
+            location = Validate.requiredField(locationText);
+            type = Validate.requiredField(typeText);
+            contactName = Validate.requiredField(contact);
+
+            minS = Time.getMinutes(Validate.requiredField(startMin));
+            minE = Time.getMinutes(Validate.requiredField(endMin));
+            start = Validate.requiredTime(startHour).withMinute(minS);
+            end = Validate.requiredTime(endHour).withMinute(minE);
+            startDate = Validate.requiredDate(startDateText);
+            endDate = Validate.requiredDate(endDateText);
+
+            startZonedDateTime = Time.getZonedDateTime(startDate, start, Time.getZoneId());
+            endZonedDateTime = Time.getZonedDateTime(endDate, end, Time.getZoneId());
+
+            Validate.checkOverlap(startZonedDateTime, contactName, customerID, this.id);
+            Validate.checkTimeOrder(startZonedDateTime, endZonedDateTime);
+
         } catch (InvalidInputException e) {
             throw e;
         }
 
-        String title = titleText.getText();
-        String description = descriptionText.getText();
-        String location = locationText.getText();
-        String type = typeText.getText();
-        String contactName = contact.getValue();
 
-        return new Appointment(id, title, description, location, type, start, end, customerID, userID, contactName);
+        return new Appointment(id, title, description, location, type, startZonedDateTime, endZonedDateTime, customerID, userID, contactName);
     }
 
     public void updateAppointment(ActionEvent event) {
