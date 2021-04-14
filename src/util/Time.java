@@ -1,8 +1,11 @@
 package util;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.Appointment;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 public class Time {
 
@@ -68,19 +71,16 @@ public class Time {
     }
 
     public static ZonedDateTime convertToUTC(ZonedDateTime time) {
-        ZonedDateTime utc = ZonedDateTime.ofInstant(time.toInstant(), utcZoneId);
-        return utc;
+        return ZonedDateTime.ofInstant(time.toInstant(), utcZoneId);
     }
 
     public static ZonedDateTime convertToSystemTime(ZonedDateTime time) {
-        ZonedDateTime systemTime = ZonedDateTime.ofInstant(time.toInstant(), zoneId);
-        return systemTime;
+        return ZonedDateTime.ofInstant(time.toInstant(), zoneId);
     }
 
     public static ZonedDateTime getZonedDateTime(LocalDate localDate, LocalTime localTime, ZoneId zoneId) {
         LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, zoneId);
-        return zonedDateTime;
+        return ZonedDateTime.of(localDateTime, zoneId);
     }
 
     public static ZonedDateTime getEndDateTime(LocalDate date, LocalTime start, LocalTime end, ZoneId zoneId) {
@@ -94,5 +94,45 @@ public class Time {
         LocalDate localDate = LocalDate.of(year, month, day);
         LocalTime localTime = LocalTime.of(hour, minutes);
         return getZonedDateTime(localDate, localTime, zoneId);
+    }
+
+    public static ObservableList<Appointment> filterWeek(ObservableList<Appointment> appointments) {
+
+        ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
+
+        ZonedDateTime now = ZonedDateTime.now(zoneId);
+        LocalDate firstDayOfThisWeek = now.toLocalDate().with(DayOfWeek.MONDAY);
+        LocalDate firstDayOfNextWeek = firstDayOfThisWeek.plusWeeks(1);
+        ZonedDateTime thisWeekStart = firstDayOfThisWeek.atStartOfDay(zoneId);
+        ZonedDateTime nextWeekStart = firstDayOfNextWeek.atStartOfDay(zoneId);
+
+        for (Appointment appointment : appointments) {
+            ZonedDateTime start = appointment.getStart();
+            if (start.isAfter(thisWeekStart) && start.isBefore(nextWeekStart)) {
+                filteredAppointments.add(appointment);
+            }
+        }
+
+        return filteredAppointments;
+    }
+
+    public static ObservableList<Appointment> filterMonth(ObservableList<Appointment> appointments) {
+
+        ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
+
+        ZonedDateTime now = ZonedDateTime.now(zoneId);
+        LocalDate firstDayOfThisMonth = now.toLocalDate().withDayOfMonth(1);
+        LocalDate firstDayOfNextMonth = firstDayOfThisMonth.plusMonths(1);
+        ZonedDateTime thisMonthStart = firstDayOfThisMonth.atStartOfDay(zoneId);
+        ZonedDateTime nextMonthStart = firstDayOfNextMonth.atStartOfDay(zoneId);
+
+        for (Appointment appointment : appointments) {
+            ZonedDateTime start = appointment.getStart();
+            if (start.isAfter(thisMonthStart) && start.isBefore(nextMonthStart)) {
+                filteredAppointments.add(appointment);
+            }
+        }
+
+        return filteredAppointments;
     }
 }
