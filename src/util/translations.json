@@ -37,5 +37,6 @@
   "Reports": ["Reports", "Rapports"],
   "Date": ["Date", "Date"],
   "Start Date": ["Start Date", "Date de Début"],
-  "End Date": ["End Date", "Date de Fin"]
+  "End Date": ["End Date", "Date de Fin"],
+  "All": ["All", "Tous"]
 }
