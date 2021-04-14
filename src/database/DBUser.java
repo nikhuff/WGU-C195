@@ -36,4 +36,26 @@ public class DBUser {
 
         return null;
     }
+
+    public static ObservableList<Integer> getUsers() {
+
+        ObservableList<Integer> userIds = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT User_ID, User_Name FROM users;";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                int id = rs.getInt("User_ID");
+                userIds.add(id);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userIds;
+    }
 }
