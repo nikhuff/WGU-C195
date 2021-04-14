@@ -69,15 +69,14 @@ public class CustomerDetail implements Initializable, Controller {
     private Button update;
 
     public CustomerDetail() {
-        String url = "../view/CustomerDetail.fxml";
-        this.viewURL = url;
+        this.viewURL = "../view/CustomerDetail.fxml";
         id = ThreadLocalRandom.current().nextInt(1000,2000);
     }
 
     public CustomerDetail(Customer customer) {
-        String url = "../view/CustomerDetail.fxml";
-        this.viewURL = url;
+        this.viewURL = "../view/CustomerDetail.fxml";
         this.customer = customer;
+        id = customer.getId();
     }
 
     @Override
@@ -85,11 +84,7 @@ public class CustomerDetail implements Initializable, Controller {
         return viewURL;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        division.setItems(DBDivision.getDivisions());
-        country.setItems(DBCountry.getCountries());
+    private void initializeLanguage() {
 
         customerTitle.setText(Language.getField("Customer"));
         idLabel.setText(Language.getField("ID"));
@@ -102,20 +97,32 @@ public class CustomerDetail implements Initializable, Controller {
         delete.setText(Language.getField("Delete"));
         cancelButton.setText(Language.getField("Cancel"));
         save.setText(Language.getField("Save"));
+    }
+
+    private void initializeCustomerFields() {
+        nameText.setText(customer.getName());
+        addressText.setText(customer.getAddress());
+        zipcodeText.setText(customer.getZipcode());
+        zipcodeText.setText(customer.getZipcode());
+        country.setValue(customer.getCountry());
+        division.setValue(customer.getDivision());
+        phoneText.setText(customer.getPhone());
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        division.setItems(DBDivision.getDivisions());
+        country.setItems(DBCountry.getCountries());
+
+        initializeLanguage();
 
         delete.setVisible(false);
         update.setVisible(false);
         idText.setText(String.valueOf(id));
 
         if (customer != null) {
-            idText.setText(String.valueOf(customer.getId()));
-            nameText.setText(customer.getName());
-            addressText.setText(customer.getAddress());
-            zipcodeText.setText(customer.getZipcode());
-            zipcodeText.setText(customer.getZipcode());
-            country.setValue(customer.getCountry());
-            division.setValue(customer.getDivision());
-            phoneText.setText(customer.getPhone());
+            initializeCustomerFields();
 
             delete.setVisible(true);
             update.setVisible(true);
@@ -141,19 +148,14 @@ public class CustomerDetail implements Initializable, Controller {
     }
 
     private Customer prepareCustomer() throws InvalidInputException {
-        int id;
-        try {
-            id = Validate.validateCustomerID(idText);
-        } catch (InvalidInputException e) {
-            throw e;
-        }
 
-        String name = nameText.getText();
-        String address = addressText.getText();
-        String zipcode = zipcodeText.getText();
-        String phone = phoneText.getText();
-        String countryValue = country.getValue();
-        String divisionValue = division.getValue();
+        int id = Validate.validateCustomerID(idText);
+        String name = Validate.requiredField(nameText);
+        String address = Validate.requiredField(addressText);
+        String zipcode = Validate.requiredField(zipcodeText);
+        String phone = Validate.requiredField(phoneText);
+        String countryValue = Validate.requiredField(country);
+        String divisionValue = Validate.requiredField(division);
 
         return new Customer(id, name, address, zipcode, phone, countryValue, divisionValue);
     }

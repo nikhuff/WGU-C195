@@ -335,51 +335,27 @@ public class AppointmentDetail implements Initializable, Controller {
 
     private Appointment prepareAppointment() throws InvalidInputException {
 
-        int id;
-        int customerID;
-        int userID;
-        String title;
-        String description;
-        String location;
-        String type;
-        String contactName;
-        int minS;
-        int minE;
-        LocalTime start;
-        LocalTime end;
-        LocalDate startDate;
-        LocalDate endDate;
+        int id = Validate.validateID(idText);
+        int customerID = Validate.validateCustomerID(customerText);
+        int userID = Validate.validateUserID(userText);
+        String title = Validate.requiredField(titleText);
+        String description = Validate.requiredField(descriptionText);
+        String location = Validate.requiredField(locationText);
+        String type = Validate.requiredField(typeText);
+        String contactName = Validate.requiredField(contact);
 
-        ZonedDateTime startZonedDateTime;
-        ZonedDateTime endZonedDateTime;
+        int minS = Time.getMinutes(Validate.requiredField(startMin));
+        int minE = Time.getMinutes(Validate.requiredField(endMin));
+        LocalTime start = Validate.requiredTime(startHour).withMinute(minS);
+        LocalTime end = Validate.requiredTime(endHour).withMinute(minE);
+        LocalDate startDate = Validate.requiredDate(startDateText);
+        LocalDate endDate = Validate.requiredDate(endDateText);
 
-        try {
-            id = Validate.validateID(idText);
-            customerID = Validate.validateCustomerID(customerText);
-            userID = Validate.validateUserID(userText);
-            title = Validate.requiredField(titleText);
-            description = Validate.requiredField(descriptionText);
-            location = Validate.requiredField(locationText);
-            type = Validate.requiredField(typeText);
-            contactName = Validate.requiredField(contact);
+        ZonedDateTime startZonedDateTime = Time.getZonedDateTime(startDate, start, Time.getZoneId());
+        ZonedDateTime endZonedDateTime = Time.getZonedDateTime(endDate, end, Time.getZoneId());
 
-            minS = Time.getMinutes(Validate.requiredField(startMin));
-            minE = Time.getMinutes(Validate.requiredField(endMin));
-            start = Validate.requiredTime(startHour).withMinute(minS);
-            end = Validate.requiredTime(endHour).withMinute(minE);
-            startDate = Validate.requiredDate(startDateText);
-            endDate = Validate.requiredDate(endDateText);
-
-            startZonedDateTime = Time.getZonedDateTime(startDate, start, Time.getZoneId());
-            endZonedDateTime = Time.getZonedDateTime(endDate, end, Time.getZoneId());
-
-            Validate.checkOverlap(startZonedDateTime, contactName, customerID, this.id);
-            Validate.checkTimeOrder(startZonedDateTime, endZonedDateTime);
-
-        } catch (InvalidInputException e) {
-            throw e;
-        }
-
+        Validate.checkOverlap(startZonedDateTime, contactName, customerID, this.id);
+        Validate.checkTimeOrder(startZonedDateTime, endZonedDateTime);
 
         return new Appointment(id, title, description, location, type, startZonedDateTime, endZonedDateTime, customerID, userID, contactName);
     }
