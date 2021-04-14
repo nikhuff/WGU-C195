@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="526.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Home">
+<AnchorPane prefHeight="623.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Home">
    <children>
       <TabPane fx:id="tabPane" layoutY="-8.0" prefHeight="526.0" prefWidth="716.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -19,6 +19,7 @@
                           <TableColumn fx:id="location" prefWidth="75.0" text="Location" />
                           <TableColumn fx:id="contact" prefWidth="75.0" text="Contact" />
                           <TableColumn fx:id="type" prefWidth="75.0" text="Type" />
+                          <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
                           <TableColumn fx:id="start" prefWidth="82.0" text="Start" />
                           <TableColumn fx:id="end" prefWidth="68.0" text="End" />
                           <TableColumn fx:id="customerIDA" prefWidth="75.0" text="Customer ID" />
