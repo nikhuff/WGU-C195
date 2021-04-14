@@ -34,5 +34,8 @@
   "Save": ["Save", "Sauvegarder"],
   "Appointment": ["Appointment", "Rendez-vous"],
   "User ID": ["User ID", "Identifiant d'utilisateur"],
-  "Reports": ["Reports", "Rapports"]
+  "Reports": ["Reports", "Rapports"],
+  "Date": ["Date", "Date"],
+  "Start Date": ["Start Date", "Date de Début"],
+  "End Date": ["End Date", "Date de Fin"]
 }
