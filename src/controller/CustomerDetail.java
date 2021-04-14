@@ -103,10 +103,71 @@ public class CustomerDetail implements Initializable, Controller {
         nameText.setText(customer.getName());
         addressText.setText(customer.getAddress());
         zipcodeText.setText(customer.getZipcode());
-        zipcodeText.setText(customer.getZipcode());
         country.setValue(customer.getCountry());
         division.setValue(customer.getDivision());
         phoneText.setText(customer.getPhone());
+    }
+
+    private void initializeListeners() {
+        nameText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(nameText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        addressText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(addressText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        zipcodeText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(zipcodeText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        phoneText.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(phoneText);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        division.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(division);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        country.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal){
+                try {
+                    Validate.requiredField(country);
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
     }
 
     @Override
@@ -116,6 +177,7 @@ public class CustomerDetail implements Initializable, Controller {
         country.setItems(DBCountry.getCountries());
 
         initializeLanguage();
+        initializeListeners();
 
         delete.setVisible(false);
         update.setVisible(false);
