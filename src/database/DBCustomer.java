@@ -3,6 +3,7 @@ package database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Customer;
+import model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,5 +45,61 @@ public class DBCustomer {
         }
 
         return customers;
+    }
+
+    public static void updateCustomer(Customer customer) {
+        try {
+            String sql =
+                    "UPDATE customers\n" +
+                            "SET Customer_Name = \"" + customer.getName() +"\",\n" +
+                            "    Address = \"" + customer.getAddress() + "\",\n" +
+                            "    Postal_Code = \"" + customer.getZipcode() + "\",\n" +
+                            "    Phone = \"" + customer.getPhone() + "\",\n" +
+                            "    Last_Update = NOW(),\n" +
+                            "    Last_Updated_By = " + User.getId() + ",\n" +
+                            "    Division_ID = (SELECT Division_ID FROM first_level_divisions WHERE Division=\"" +
+                            customer.getDivision() + "\") \n" +
+                            "WHERE customers.Customer_ID = " + customer.getId() + ";";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addCustomer(Customer customer) {
+        try {
+            String sql =
+                    "INSERT INTO customers VALUES(" + customer.getId() + ", '" + customer.getName() +
+                            "', '" + customer.getAddress() + "', '" + customer.getZipcode() + "', '" +
+                            customer.getPhone() + "', " +  "NOW(), " + User.getId() + ", NOW(), " + User.getId() +
+                            "," +
+                            " (SELECT Division_ID FROM first_level_divisions WHERE Division ='" + customer.getDivision() + "'));\n";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteCustomer(String id) {
+        DBAppointment.deleteAppointmentByCustomer(id);
+        try {
+            String sql =
+                    "DELETE FROM customers WHERE Customer_ID=" + id;
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
