@@ -15,7 +15,7 @@
   "Start Time": ["Start Time", "Heure de début"],
   "End Time": ["End Time", "Heure de Fin"],
   "Customer ID": ["Customer ID", "N ° de client"],
-  "Filter By": ["Filter By", "Filtrer Par"],
+  "Filter By": ["Filter By:", "Filtrer Par:"],
   "Week": ["Week", "Semaine"],
   "Month": ["Month", "Mois"],
   "Add": ["Add", "Ajouter"],
