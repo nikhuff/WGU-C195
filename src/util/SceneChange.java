@@ -25,7 +25,7 @@ public class SceneChange {
         this.controller = controller;
     }
 
-    public void changeScene(String title, int height, int width) {
+    public void changeScene(String title, int height, int width, int minH, int minW) {
         Parent root = null;
         try {
             if (controller != null) {
@@ -43,6 +43,8 @@ public class SceneChange {
         scene.getStylesheets().add("styles/styles.css");
         stage.setTitle(title);
         stage.setScene(scene);
+        stage.setMinHeight(minH);
+        stage.setMinWidth(minW);
         stage.show();
     }
 }
