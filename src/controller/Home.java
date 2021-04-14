@@ -88,8 +88,7 @@ public class Home implements Initializable {
     @FXML
     private TableView customerTable;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    private void initializeLanguage() {
         // appointments tab
         appointments.setText(Language.getField("Appointments"));
         appointmentID.setText(Language.getField("Appointment ID"));
@@ -124,13 +123,16 @@ public class Home implements Initializable {
         // reports tab
         reports.setText(Language.getField("Reports"));
         generate.setText(Language.getField("Generate"));
+    }
 
-        // make the tabs pretty
+    private void initializeListeners() {
         tabPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             tabPane.setTabMinWidth((tabPane.getWidth() / tabPane.getTabs().size()) - 15);
             tabPane.setTabMaxWidth((tabPane.getWidth() / tabPane.getTabs().size()) - 15);
         });
+    }
 
+    private void initializeTables() {
         appointmentTable.setItems(DBAppointment.getAppointments());
         customerTable.setItems(DBCustomer.getCustomers());
 
@@ -152,6 +154,13 @@ public class Home implements Initializable {
         phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         country.setCellValueFactory(new PropertyValueFactory<>("country"));
         division.setCellValueFactory(new PropertyValueFactory<>("division"));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        initializeLanguage();
+        initializeListeners();
+        initializeTables();
     }
 
     public void addAppointment(ActionEvent event) {
