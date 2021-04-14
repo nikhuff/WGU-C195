@@ -13,6 +13,7 @@ import model.Appointment;
 import model.Customer;
 import util.Language;
 import util.SceneChange;
+import util.Time;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,6 +50,8 @@ public class Home implements Initializable {
     private TableColumn customerIDA;
     @FXML
     private Label filterBy;
+    @FXML
+    private RadioButton all;
     @FXML
     private RadioButton week;
     @FXML
@@ -100,6 +103,7 @@ public class Home implements Initializable {
         end.setText(Language.getField("End Time"));
         customerIDA.setText(Language.getField("Customer ID"));
         filterBy.setText(Language.getField("Filter By"));
+        all.setText(Language.getField("All"));
         week.setText(Language.getField("Week"));
         month.setText(Language.getField("Month"));
         addAppointment.setText(Language.getField("Add"));
@@ -122,8 +126,7 @@ public class Home implements Initializable {
         generate.setText(Language.getField("Generate"));
 
         // make the tabs pretty
-        tabPane.widthProperty().addListener((observable, oldValue, newValue) ->
-        {
+        tabPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             tabPane.setTabMinWidth((tabPane.getWidth() / tabPane.getTabs().size()) - 15);
             tabPane.setTabMaxWidth((tabPane.getWidth() / tabPane.getTabs().size()) - 15);
         });
@@ -183,5 +186,15 @@ public class Home implements Initializable {
         CustomerDetail customerDetail = new CustomerDetail(customer);
         SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), customerDetail);
         sc.changeScene(Language.getField("Stage Title"), 450, 350, 400, 300);
+    }
+
+    public void filterAppointments() {
+        if (all.isSelected()) {
+            appointmentTable.setItems(DBAppointment.getAppointments());
+        } else if (week.isSelected()) {
+            appointmentTable.setItems(Time.filterWeek(DBAppointment.getAppointments()));
+        } else if (month.isSelected()) {
+            appointmentTable.setItems(Time.filterMonth(DBAppointment.getAppointments()));
+        }
     }
 }
