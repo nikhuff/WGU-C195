@@ -40,6 +40,8 @@ public class Home implements Initializable {
     @FXML
     private TableColumn type;
     @FXML
+    private TableColumn date;
+    @FXML
     private TableColumn start;
     @FXML
     private TableColumn end;
@@ -93,6 +95,7 @@ public class Home implements Initializable {
         location.setText(Language.getField("Location"));
         contact.setText(Language.getField("Contact"));
         type.setText(Language.getField("Type"));
+        date.setText(Language.getField("Date"));
         start.setText(Language.getField("Start Time"));
         end.setText(Language.getField("End Time"));
         customerIDA.setText(Language.getField("Customer ID"));
@@ -133,8 +136,9 @@ public class Home implements Initializable {
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
         location.setCellValueFactory(new PropertyValueFactory<>("location"));
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        start.setCellValueFactory(new PropertyValueFactory<>("start"));
-        end.setCellValueFactory(new PropertyValueFactory<>("end"));
+        date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        start.setCellValueFactory(new PropertyValueFactory<>("startLocalTime"));
+        end.setCellValueFactory(new PropertyValueFactory<>("endLocalTime"));
         contact.setCellValueFactory(new PropertyValueFactory<>("contact"));
         customerIDA.setCellValueFactory(new PropertyValueFactory<>("customerID"));
 
@@ -150,7 +154,7 @@ public class Home implements Initializable {
     public void addAppointment(ActionEvent event) {
         AppointmentDetail appointmentDetail = new AppointmentDetail();
         SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), appointmentDetail);
-        sc.changeScene(Language.getField("Stage Title"), 450, 350);
+        sc.changeScene(Language.getField("Stage Title"), 550, 350, 550, 330);
     }
 
     public void editAppointment(ActionEvent event) {
@@ -161,13 +165,13 @@ public class Home implements Initializable {
         }
         AppointmentDetail appointmentDetail = new AppointmentDetail(appointment);
         SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), appointmentDetail);
-        sc.changeScene(Language.getField("Stage Title"), 450, 350);
+        sc.changeScene(Language.getField("Stage Title"), 550, 350, 550, 330);
     }
 
     public void addCustomer(ActionEvent event) {
         CustomerDetail customerDetail = new CustomerDetail();
         SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), customerDetail);
-        sc.changeScene(Language.getField("Stage Title"), 450, 350);
+        sc.changeScene(Language.getField("Stage Title"), 450, 350, 550, 300);
     }
 
     public void editCustomer(ActionEvent event) {
@@ -178,6 +182,6 @@ public class Home implements Initializable {
         }
         CustomerDetail customerDetail = new CustomerDetail(customer);
         SceneChange sc = new SceneChange((Stage)((Node)event.getSource()).getScene().getWindow(), customerDetail);
-        sc.changeScene(Language.getField("Stage Title"), 450, 350);
+        sc.changeScene(Language.getField("Stage Title"), 450, 350, 400, 300);
     }
 }
