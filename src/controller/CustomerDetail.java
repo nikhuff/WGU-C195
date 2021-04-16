@@ -1,5 +1,6 @@
 package controller;
 
+import database.DBAppointment;
 import database.DBCountry;
 import database.DBCustomer;
 import database.DBDivision;
@@ -14,10 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
-import util.InvalidInputException;
-import util.Language;
-import util.SceneChange;
-import util.Validate;
+import util.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -211,7 +209,6 @@ public class CustomerDetail implements Initializable, Controller {
 
     private Customer prepareCustomer() throws InvalidInputException {
 
-        int id = Validate.validateCustomerID(idText);
         String name = Validate.requiredField(nameText);
         String address = Validate.requiredField(addressText);
         String zipcode = Validate.requiredField(zipcodeText);
@@ -230,6 +227,7 @@ public class CustomerDetail implements Initializable, Controller {
             customer = prepareCustomer();
         } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
+            DialogBox.improperInput(e.getMessage());
             return;
         }
         DBCustomer.updateCustomer(customer);
@@ -244,6 +242,7 @@ public class CustomerDetail implements Initializable, Controller {
             customer = prepareCustomer();
         } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
+            DialogBox.improperInput(e.getMessage());
             return;
         }
         DBCustomer.addCustomer(customer);
@@ -252,8 +251,11 @@ public class CustomerDetail implements Initializable, Controller {
 
     public void deleteCustomer(ActionEvent event) {
         String id = idText.getText();
-//        DBAppointment.deleteAppointment(id);
-        DBCustomer.deleteCustomer(id);
-        returnHome(event);
+        if (DialogBox.deleteConfirmation()) {
+            DBAppointment.deleteAppointmentByCustomer(id);
+            DBCustomer.deleteCustomer(id);
+            DialogBox.deleteNotificationCustomer(id);
+            returnHome(event);
+        }
     }
 }

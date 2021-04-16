@@ -294,8 +294,8 @@ public class AppointmentDetail implements Initializable, Controller {
         contact.setValue(appointment.getContact());
         startDateText.setValue(appointment.getStart().toLocalDate());
         endDateText.setValue(appointment.getEnd().toLocalDate());
-        startHour.setValue(appointment.getStart().toLocalTime());
-        endHour.setValue(appointment.getEnd().toLocalTime());
+        startHour.setValue(appointment.getStart().toLocalTime().withMinute(0));
+        endHour.setValue(appointment.getEnd().toLocalTime().withMinute(0));
         startMin.setValue(Time.getMinuteString(appointment.getStart().toLocalTime()));
         endMin.setValue(Time.getMinuteString(appointment.getEnd().toLocalTime()));
         customerText.setText(String.valueOf(appointment.getCustomerID()));
@@ -368,6 +368,7 @@ public class AppointmentDetail implements Initializable, Controller {
             appointment = prepareAppointment();
         } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
+            DialogBox.improperInput(e.getMessage());
             return;
         }
         DBAppointment.updateAppointment(appointment);
@@ -382,6 +383,7 @@ public class AppointmentDetail implements Initializable, Controller {
             appointment = prepareAppointment();
         } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
+            DialogBox.improperInput(e.getMessage());
             return;
         }
         DBAppointment.addAppointment(appointment);
@@ -390,7 +392,11 @@ public class AppointmentDetail implements Initializable, Controller {
 
     public void deleteAppointment(ActionEvent event) {
         String id = idText.getText();
-        DBAppointment.deleteAppointment(id);
-        returnHome(event);
+        if (DialogBox.deleteConfirmation()) {
+            Appointment app = DBAppointment.getAppointment(Integer.parseInt(id));
+            DBAppointment.deleteAppointment(id);
+            DialogBox.deleteNotificationAppointment(app);
+            returnHome(event);
+        }
     }
 }
