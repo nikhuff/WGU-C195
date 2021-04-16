@@ -24,5 +24,6 @@
             <Button fx:id="signIn" layoutX="66.0" mnemonicParsing="false" onAction="#signIn" text="Sign In" />
          </children>
       </AnchorPane>
+      <Label fx:id="zoneId" alignment="CENTER" contentDisplay="CENTER" layoutX="161.0" layoutY="63.0" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
    </children>
 </AnchorPane>
