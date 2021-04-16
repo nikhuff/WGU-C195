@@ -114,13 +114,12 @@ public class Validate {
             ZonedDateTime start = appointment.getStart();
             ZonedDateTime end = appointment.getEnd();
 
+            // add check to see if end is after start and before or equal to end
             if ((startZonedDateTime.isAfter(start) || startZonedDateTime.isEqual(start)) && startZonedDateTime.isBefore(end) && appointment.getId() != appointmentId) {
                 if (contact.matches(appointment.getContact())) {
-                    throw new InvalidInputException("The contact already has an appointment from " +
-                            start.toLocalTime() + " to " + end.toLocalTime() + " on " + start.toLocalDate());
+                    throw new InvalidInputException(Language.getField("The contact already has an appointment at that time."));
                 } else if (appointment.getCustomerID() == customerId) {
-                    throw new InvalidInputException("The customer already has an appointment from " +
-                            start.toLocalTime() + " to " + end.toLocalTime() + " on " + start.toLocalDate());
+                    throw new InvalidInputException(Language.getField("The customer already has an appointment at that time."));
                 }
             }
         }
