@@ -10,10 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.User;
-import util.DialogBox;
-import util.Language;
-import util.SceneChange;
-import util.Time;
+import util.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,7 +43,9 @@ public class Login implements Initializable {
     public void signIn(ActionEvent actionEvent) {
 
         User user = DBUser.authenticateUser(providedUsername.getText(), providedPassword.getText());
-        if (user != null) {
+        boolean success = user != null;
+        Logger.logAttempt(providedUsername.getText(), success);
+        if (success) {
             System.out.println("Success! Welcome " + user.getUsername() + "!");
             SceneChange sc = new SceneChange((Stage)((Node)actionEvent.getSource()).getScene().getWindow(), "../view/home.fxml");
             sc.changeScene(Language.getField("Stage Title"), 500, 500, 500, 500);
