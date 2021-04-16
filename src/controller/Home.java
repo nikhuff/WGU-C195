@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.Customer;
+import model.User;
+import util.DialogBox;
 import util.Language;
 import util.SceneChange;
 import util.Time;
@@ -134,7 +136,9 @@ public class Home implements Initializable {
 
     private void initializeTables() {
         appointmentTable.setItems(DBAppointment.getAppointments());
+        appointmentTable.setPlaceholder(new Label(Language.getField("No content in table")));
         customerTable.setItems(DBCustomer.getCustomers());
+        customerTable.setPlaceholder(new Label(Language.getField("No content in table")));
 
         appointmentID.setCellValueFactory(new PropertyValueFactory<>("id"));
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -161,6 +165,11 @@ public class Home implements Initializable {
         initializeLanguage();
         initializeListeners();
         initializeTables();
+        if (!User.getOnLogon()) {
+            Appointment appointment = Time.appointmentSoon();
+            DialogBox.appointmentAlert(appointment);
+            User.setOnLogon(true);
+        }
     }
 
     public void addAppointment(ActionEvent event) {

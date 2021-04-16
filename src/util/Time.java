@@ -1,5 +1,6 @@
 package util;
 
+import database.DBAppointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
@@ -134,5 +135,19 @@ public class Time {
         }
 
         return filteredAppointments;
+    }
+
+    public static Appointment appointmentSoon() {
+
+        ZonedDateTime now = ZonedDateTime.now(zoneId);
+        ZonedDateTime fifteen = now.plusMinutes(15);
+        ObservableList<Appointment> appointments = DBAppointment.getAppointments();
+
+        for (Appointment appointment : appointments) {
+            if (appointment.getStart().isAfter(now) && appointment.getStart().isBefore(fifteen)) {
+                return appointment;
+            }
+        }
+        return null;
     }
 }
