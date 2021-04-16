@@ -4,6 +4,7 @@ public class User {
 
     private static int id;
     private static String username;
+    private static boolean onLogon = false;
 
     public User(int id, String username) {
         this.id = id;
@@ -26,4 +27,11 @@ public class User {
         this.username = username;
     }
 
+    public static boolean getOnLogon() {
+        return onLogon;
+    }
+
+    public static void setOnLogon(boolean loggedon) {
+        onLogon = true;
+    }
 }
