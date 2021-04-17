@@ -17,6 +17,15 @@ public class DialogBox {
         alert.show();
     }
 
+    public static void noSelection() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(Language.getField("No Selection"));
+        alert.setHeaderText(Language.getField("No Selection"));
+        alert.setContentText(Language.getField("Please select an item"));
+
+        alert.show();
+    }
+
     public static void invalidCredentials() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(Language.getField("Invalid Credentials"));

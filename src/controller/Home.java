@@ -195,6 +195,7 @@ public class Home implements Initializable {
         Appointment appointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
         if (appointment == null) {
             System.out.println("nothing selected");
+            DialogBox.noSelection();
             return;
         }
         AppointmentDetail appointmentDetail = new AppointmentDetail(appointment);
@@ -212,6 +213,7 @@ public class Home implements Initializable {
         Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
         if (customer == null) {
             System.out.println("nothing selected");
+            DialogBox.noSelection();
             return;
         }
         CustomerDetail customerDetail = new CustomerDetail(customer);
@@ -233,6 +235,7 @@ public class Home implements Initializable {
         String selection = reportOptions.getSelectionModel().getSelectedItem().toString();
         if (selection.isEmpty()) {
             System.out.println("nothing selected");
+            DialogBox.noSelection();
             return;
         }
         if (selection.matches(customersPerCountry)) {
