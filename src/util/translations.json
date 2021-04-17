@@ -64,5 +64,7 @@
   "deleted": ["deleted", "supprimé"],
   "Deletion Occurred": ["Deletion Occurred", "La suppression s'est produite"],
   "Appointment Deleted": ["Appointment Deleted", "Rendez-vous supprimé"],
-  "No content in table": ["No content in table", "Aucun contenu dans le tableau"]
+  "No content in table": ["No content in table", "Aucun contenu dans le tableau"],
+  "No Selection": ["No Selection", "Pas de Choix"],
+  "Please select an item": ["Please select an item", "veuillez sélectionner un article"]
 }
