@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.ZonedDateTime;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class DBAppointment {
 
@@ -167,5 +169,26 @@ public class DBAppointment {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ResultSet getAppointmentsByTypeAndMonth() {
+
+        try {
+            String sql = "SELECT type, count(type) AS total " +
+                    "FROM appointments " +
+                    "GROUP BY type " +
+                    "UNION " +
+                    "SELECT substring(Start, 6, 2), count(*) " +
+                    "FROM appointments " +
+                    "GROUP BY substring(Start, 6, 2);";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            return ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
