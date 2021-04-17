@@ -48,7 +48,7 @@ public class Login implements Initializable {
         if (success) {
             System.out.println("Success! Welcome " + user.getUsername() + "!");
             SceneChange sc = new SceneChange((Stage)((Node)actionEvent.getSource()).getScene().getWindow(), "../view/home.fxml");
-            sc.changeScene(Language.getField("Stage Title"), 500, 500, 500, 500);
+            sc.changeScene(Language.getField("Stage Title"), 500, 790, 200, 790);
         } else {
             System.out.println("Invalid user name or password");
             DialogBox.invalidCredentials();
