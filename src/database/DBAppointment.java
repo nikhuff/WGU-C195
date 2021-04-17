@@ -191,4 +191,42 @@ public class DBAppointment {
 
         return null;
     }
+
+    public static ResultSet getSchedule() {
+
+        try {
+            String sql = "SELECT appointments.Appointment_ID, appointments.Title, appointments.Description,\n" +
+                    "appointments.Type, contacts.Contact_Name, appointments.Start,\n" +
+                    "appointments.End, appointments.Customer_ID\n" +
+                    "FROM appointments\n" +
+                    "INNER JOIN contacts ON appointments.Contact_ID=contacts.Contact_ID;";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            return ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ResultSet customersPerCountry() {
+
+        try {
+            String sql = "SELECT countries.Country, COUNT(countries.Country) AS number_customers\n" +
+                    "FROM ((customers\n" +
+                    "INNER JOIN first_level_divisions ON customers.Division_ID=first_level_divisions.Division_ID)\n" +
+                    "INNER JOIN countries ON first_level_divisions.COUNTRY_ID=countries.Country_ID)\n" +
+                    "GROUP BY countries.Country;";
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            return ps.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
