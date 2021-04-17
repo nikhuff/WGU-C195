@@ -8,6 +8,7 @@ import net.sf.dynamicreports.report.builder.component.Components;
 import net.sf.dynamicreports.report.builder.datatype.DataTypes;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class Reports {
 
@@ -26,7 +27,7 @@ public class Reports {
             .setDataSource(DBAppointment.getAppointmentsByTypeAndMonth());
 
         try {
-            report.show();
+            report.show(false);
         } catch (DRException e) {
             e.printStackTrace();
         }
@@ -55,7 +56,7 @@ public class Reports {
             .setDataSource(DBAppointment.getSchedule());
 
         try {
-            report.show();
+            report.show(false);
         } catch (DRException e) {
             e.printStackTrace();
         }
@@ -76,7 +77,7 @@ public class Reports {
             .setDataSource(DBAppointment.customersPerCountry());
 
         try {
-            report.show();
+            report.show(false);
         } catch (DRException e) {
             e.printStackTrace();
         }

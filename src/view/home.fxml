@@ -76,10 +76,10 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="158.0" layoutY="77.0" prefHeight="497.0" prefWidth="716.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+                        <ListView fx:id="reportOptions" layoutX="158.0" layoutY="77.0" prefHeight="497.0" prefWidth="716.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
                        <AnchorPane layoutX="604.0" layoutY="458.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
                          <children>
-                           <Button fx:id="generate" mnemonicParsing="false" text="Generate" />
+                           <Button fx:id="generate" mnemonicParsing="false" onAction="#generateReport" text="Generate" />
                          </children>
                        </AnchorPane>
                      </children>

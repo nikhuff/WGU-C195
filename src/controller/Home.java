@@ -2,6 +2,8 @@ package controller;
 
 import database.DBAppointment;
 import database.DBCustomer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,10 +14,7 @@ import javafx.stage.Stage;
 import model.Appointment;
 import model.Customer;
 import model.User;
-import util.DialogBox;
-import util.Language;
-import util.SceneChange;
-import util.Time;
+import util.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -90,6 +89,13 @@ public class Home implements Initializable {
     @FXML
     private TableView customerTable;
 
+    private final String appointmentsTotals = "Total Appointments by Type and Month";
+    private final String schedule = "Contact Schedules";
+    private final String customersPerCountry = "Number of Customers per Country";
+
+    @FXML
+    private ListView reportOptions;
+
     private void initializeLanguage() {
         // appointments tab
         appointments.setText(Language.getField("Appointments"));
@@ -158,6 +164,13 @@ public class Home implements Initializable {
         phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         country.setCellValueFactory(new PropertyValueFactory<>("country"));
         division.setCellValueFactory(new PropertyValueFactory<>("division"));
+
+        ObservableList<String> options = FXCollections.observableArrayList();
+        options.add(appointmentsTotals);
+        options.add(schedule);
+        options.add(customersPerCountry);
+
+        reportOptions.setItems(options);
     }
 
     @Override
@@ -213,6 +226,21 @@ public class Home implements Initializable {
             appointmentTable.setItems(Time.filterWeek(DBAppointment.getAppointments()));
         } else if (month.isSelected()) {
             appointmentTable.setItems(Time.filterMonth(DBAppointment.getAppointments()));
+        }
+    }
+
+    public void generateReport() {
+        String selection = reportOptions.getSelectionModel().getSelectedItem().toString();
+        if (selection.isEmpty()) {
+            System.out.println("nothing selected");
+            return;
+        }
+        if (selection.matches(customersPerCountry)) {
+            Reports.customersPerCountry();
+        } else if (selection.matches(appointmentsTotals)) {
+            Reports.totalAppointmentsByTypeAndMonth();
+        } else if (selection.matches(schedule)) {
+            Reports.contactSchedule();
         }
     }
 }
