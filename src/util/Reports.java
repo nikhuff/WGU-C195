@@ -1,6 +1,7 @@
 package util;
 
 import database.DBAppointment;
+import database.DBCustomer;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.column.Columns;
@@ -73,7 +74,7 @@ public class Reports {
                 Components.text("Number of Customers per Country")
                     .setHorizontalTextAlignment(HorizontalTextAlignment.CENTER))
             .pageFooter(Components.pageXofY())
-            .setDataSource(DBAppointment.customersPerCountry());
+            .setDataSource(DBCustomer.customersPerCountry());
 
         try {
             report.show(false);
